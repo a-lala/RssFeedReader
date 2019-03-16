@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="rssFeedDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Item">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Idrsslinks" Type="Int32" Nullable="false" />
+    <Property Name="Itemtitle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Itemcontent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="rsslink" Relationship="Self.FK_Items_rsslinks" FromRole="Items" ToRole="rsslinks" />
+  </EntityType>
+  <EntityType Name="rsslink">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="rssLink1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Items" Relationship="Self.FK_Items_rsslinks" FromRole="rsslinks" ToRole="Items" />
+  </EntityType>
+  <EntityType Name="ItemsWithRssLink">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="rssLink" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="rssLink" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Itemtitle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Itemcontent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <Association Name="FK_Items_rsslinks">
+    <End Role="rsslinks" Type="Self.rsslink" Multiplicity="1" />
+    <End Role="Items" Type="Self.Item" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="rsslinks">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Items">
+        <PropertyRef Name="Idrsslinks" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="rssFeedDbEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Items" EntityType="Self.Item" />
+    <EntitySet Name="rsslinks" EntityType="Self.rsslink" />
+    <EntitySet Name="ItemsWithRssLinks" EntityType="Self.ItemsWithRssLink" />
+    <AssociationSet Name="FK_Items_rsslinks" Association="Self.FK_Items_rsslinks">
+      <End Role="rsslinks" EntitySet="rsslinks" />
+      <End Role="Items" EntitySet="Items" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

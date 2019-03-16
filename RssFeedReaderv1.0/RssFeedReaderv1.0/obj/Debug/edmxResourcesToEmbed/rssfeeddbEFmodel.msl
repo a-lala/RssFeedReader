@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="rssFeedDbModelStoreContainer" CdmEntityContainer="rssFeedDbEntities1">
+    <EntitySetMapping Name="Items">
+      <EntityTypeMapping TypeName="rssFeedDbModel.Item">
+        <MappingFragment StoreEntitySet="Items">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Idrsslinks" ColumnName="Idrsslinks" />
+          <ScalarProperty Name="Itemtitle" ColumnName="Itemtitle" />
+          <ScalarProperty Name="Itemcontent" ColumnName="Itemcontent" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="rsslinks">
+      <EntityTypeMapping TypeName="rssFeedDbModel.rsslink">
+        <MappingFragment StoreEntitySet="rsslinks">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="rssLink1" ColumnName="rssLink" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ItemsWithRssLinks">
+      <EntityTypeMapping TypeName="rssFeedDbModel.ItemsWithRssLink">
+        <MappingFragment StoreEntitySet="ItemsWithRssLink">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="rssLink" ColumnName="rssLink" />
+          <ScalarProperty Name="Itemtitle" ColumnName="Itemtitle" />
+          <ScalarProperty Name="Itemcontent" ColumnName="Itemcontent" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

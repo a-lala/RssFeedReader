@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="rssFeedDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Items">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Idrsslinks" Type="int" Nullable="false" />
+    <Property Name="Itemtitle" Type="nvarchar(max)" />
+    <Property Name="Itemcontent" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="rsslinks">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="rssLink" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'C:\USERS\ALALA\DOCUMENTS\VISUAL STUDIO 2017\PROJECTS\RSSFEEDREADERV1.0\RSSFEEDREADERV1.0\RSSFEEDDB.MDF.dbo.ItemsWithRssLink' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="ItemsWithRssLink">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="rssLink" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="rssLink" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Itemtitle" Type="nvarchar(max)" />
+    <Property Name="Itemcontent" Type="nvarchar(max)" />
+  </EntityType>
+  <Association Name="FK_Items_rsslinks">
+    <End Role="rsslinks" Type="Self.rsslinks" Multiplicity="1" />
+    <End Role="Items" Type="Self.Items" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="rsslinks">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Items">
+        <PropertyRef Name="Idrsslinks" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="rssFeedDbModelStoreContainer">
+    <EntitySet Name="Items" EntityType="Self.Items" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="rsslinks" EntityType="Self.rsslinks" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ItemsWithRssLink" EntityType="Self.ItemsWithRssLink" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [ItemsWithRssLink].[Id] AS [Id], 
+    [ItemsWithRssLink].[rssLink] AS [rssLink], 
+    [ItemsWithRssLink].[Itemtitle] AS [Itemtitle], 
+    [ItemsWithRssLink].[Itemcontent] AS [Itemcontent]
+    FROM [dbo].[ItemsWithRssLink] AS [ItemsWithRssLink]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_Items_rsslinks" Association="Self.FK_Items_rsslinks">
+      <End Role="rsslinks" EntitySet="rsslinks" />
+      <End Role="Items" EntitySet="Items" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
