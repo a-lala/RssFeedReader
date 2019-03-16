@@ -52,6 +52,7 @@ namespace RssFeedReaderv1._0
             {
                 getRssFeedFileUrl(s);
             });
+            GetData(ITEMS_NEWS_SELECT);
         }
 
         public void getRssFeedFileUrl(string url)
