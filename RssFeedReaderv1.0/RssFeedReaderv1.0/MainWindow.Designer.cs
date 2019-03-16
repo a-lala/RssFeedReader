@@ -44,6 +44,7 @@
             this.databaseDataSet = new RssFeedReaderv1._0.DatabaseDataSet();
             this.itemsNewsBindingSource2 = new System.Windows.Forms.BindingSource(this.components);
             this.itemsNewsTableAdapter = new RssFeedReaderv1._0.DatabaseDataSetTableAdapters.ItemsNewsTableAdapter();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemsNewsBindingSource1)).BeginInit();
@@ -196,6 +197,7 @@
         private System.Windows.Forms.BindingSource itemsNewsBindingSource2;
         private DatabaseDataSetTableAdapters.ItemsNewsTableAdapter itemsNewsTableAdapter;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 

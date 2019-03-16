@@ -32,9 +32,26 @@ namespace RssFeedReaderv1._0
         public MainWindow()
         {
             InitializeComponent();
+
             /// for using the db from App_Data folder.....
             string workingDirectory = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\App_Data\";
             AppDomain.CurrentDomain.SetData("DataDirectory", workingDirectory);
+
+            timer1.Interval = 20000;
+            timer1.Tick += new EventHandler(Timer_Tick);
+
+            // Enable timer.  
+            timer1.Enabled = true;
+
+            
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            Parallel.ForEach(getRssLinks(),s => 
+            {
+                getRssFeedFileUrl(s);
+            });
         }
 
         public void getRssFeedFileUrl(string url)
@@ -55,7 +72,7 @@ namespace RssFeedReaderv1._0
                 {
                     Itemtitle = xmlNodeList.Item(i).SelectSingleNode("title").InnerText;
                     Itemcontent = xmlNodeList.Item(i).SelectSingleNode("description").InnerText;
-                    
+
                     //  insert to db
                     insertRssItem(Itemtitle, Itemcontent, id);
                 }
@@ -105,9 +122,9 @@ namespace RssFeedReaderv1._0
         {
             try
             {
-                
+
                 getRssFeedFileUrl(txtboxRsslink.Text);
-                
+
                 GetData(dataAdapter.SelectCommand.CommandText);
             }
             catch (Exception ex)
@@ -115,6 +132,8 @@ namespace RssFeedReaderv1._0
                 Console.WriteLine(ex.StackTrace);
             }
         }
+
+
 
 
         #region Stored Procedures
@@ -144,6 +163,37 @@ namespace RssFeedReaderv1._0
 
             }
             return -1;
+        }
+
+        public List<string> getRssLinks()
+        {
+            try
+            {
+
+
+                List<string> columnData = new List<string>();
+
+                using (SqlConnection connection = new SqlConnection(CONNECTION_STRING))
+                {
+                    connection.Open();
+                    string query = "SELECT link from links";
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                columnData.Add(reader.GetString(0));
+                            }
+                        }
+                    }
+                    return columnData;
+                }
+            }
+            catch (Exception)
+            {
+            }
+            return null;
         }
 
         private void insertRssItem(string title, string content, int rsslink)
