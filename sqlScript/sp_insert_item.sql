@@ -1,4 +1,7 @@
-﻿CREATE PROCEDURE [dbo].[insertRssItem]
+﻿use dbRss
+Go
+
+CREATE PROCEDURE [dbo].[insertRssItem]
 	@title nvarchar(MAX),
 	@content nvarchar(MAX),
 	@date datetime,

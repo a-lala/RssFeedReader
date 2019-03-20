@@ -41,9 +41,8 @@
             this.itemsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.rsslinksBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.rssFeedDbDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.databaseDataSet = new RssFeedReaderv1._0.DatabaseDataSet();
             this.itemsNewsBindingSource2 = new System.Windows.Forms.BindingSource(this.components);
-            this.itemsNewsTableAdapter = new RssFeedReaderv1._0.DatabaseDataSetTableAdapters.ItemsNewsTableAdapter();
+
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -55,7 +54,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.itemsBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rsslinksBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rssFeedDbDataSetBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.databaseDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemsNewsBindingSource2)).BeginInit();
             this.SuspendLayout();
             // 
@@ -137,19 +135,14 @@
             // 
             this.rsslinksBindingSource.DataMember = "rsslinks";
             // 
-            // databaseDataSet
-            // 
-            this.databaseDataSet.DataSetName = "DatabaseDataSet";
-            this.databaseDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
             // itemsNewsBindingSource2
             // 
             this.itemsNewsBindingSource2.DataMember = "ItemsNews";
-            this.itemsNewsBindingSource2.DataSource = this.databaseDataSet;
+
             // 
             // itemsNewsTableAdapter
             // 
-            this.itemsNewsTableAdapter.ClearBeforeFill = true;
+
             // 
             // MainWindow
             // 
@@ -171,7 +164,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.itemsBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rsslinksBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rssFeedDbDataSetBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.databaseDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemsNewsBindingSource2)).EndInit();
             this.ResumeLayout(false);
 
@@ -193,9 +185,7 @@
 
 
         private System.Windows.Forms.BindingSource itemsNewsBindingSource1;
-        private DatabaseDataSet databaseDataSet;
         private System.Windows.Forms.BindingSource itemsNewsBindingSource2;
-        private DatabaseDataSetTableAdapters.ItemsNewsTableAdapter itemsNewsTableAdapter;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Timer timer1;
     }

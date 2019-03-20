@@ -24,9 +24,11 @@ namespace RssFeedReaderv1._0
         private BindingSource bindingSource1 = new BindingSource();
         private SqlDataAdapter dataAdapter = new SqlDataAdapter();
 
-        public string CONNECTION_STRING = @"Data Source=(LocalDB)\MSSQLLocalDB;" +
-                    "AttachDbFilename=|DataDirectory|Database.mdf;" +
-                    "Integrated Security=True";
+        //public string CONNECTION_STRING = @"Data Source=(LocalDB)\MSSQLLocalDB;" +
+        //            "AttachDbFilename=|DataDirectory|Database.mdf;" +
+        //            "Integrated Security=True";
+
+        public string CONNECTION_STRING = @"Data Source=DESKTOP-EE9097E;Initial Catalog=dbRss;Integrated Security=True";//@"Data Source=DESKTOP-EE9097E;Initial Catalog=dbRss;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;user=DESKTOP-EE9097E\Alala";//ConfigurationManager.ConnectionStrings["dbRssConnection"].ToString();//@"Data Source=DESKTOP-EE9097E;Initial Catalog = dbRss; Integrated Security = SSPI;";
         private string ITEMS_NEWS_SELECT = "select title as 'عنوان', content as 'شرح', date as 'تاريخ'  from ItemsNews ORDER BY date Asc";
 
         public MainWindow()
@@ -34,8 +36,8 @@ namespace RssFeedReaderv1._0
             InitializeComponent();
 
             /// for using the db from App_Data folder.....
-            string workingDirectory = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\App_Data\";
-            AppDomain.CurrentDomain.SetData("DataDirectory", workingDirectory);
+            //string workingDirectory = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + @"\App_Data\";
+            //AppDomain.CurrentDomain.SetData("DataDirectory", workingDirectory);
 
             timer1.Interval = 20000;
             timer1.Tick += new EventHandler(Timer_Tick);
@@ -63,7 +65,7 @@ namespace RssFeedReaderv1._0
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load(rssStream);
             XmlNodeList xmlNodeList = xmlDoc.SelectNodes("//rss/channel/item");
-            int id = insert_rss_link(url);
+            insert_rss_link(url);
             try
             {
                 string Itemcontent = null;
@@ -75,7 +77,7 @@ namespace RssFeedReaderv1._0
                     Itemcontent = xmlNodeList.Item(i).SelectSingleNode("description").InnerText;
 
                     //  insert to db
-                    insertRssItem(Itemtitle, Itemcontent, id);
+                    insertRssItem(Itemtitle, Itemcontent, url);
                 }
             }
             catch (Exception ex)
@@ -197,7 +199,7 @@ namespace RssFeedReaderv1._0
             return null;
         }
 
-        private void insertRssItem(string title, string content, int rsslink)
+        private void insertRssItem(string title, string content, string rsslink)
         {
             using (SqlConnection con = new SqlConnection(CONNECTION_STRING))
             {
@@ -207,7 +209,7 @@ namespace RssFeedReaderv1._0
 
                     cmd.Parameters.Add("@title", SqlDbType.NVarChar).Value = title;
                     cmd.Parameters.Add("@content", SqlDbType.NVarChar).Value = content;
-                    cmd.Parameters.Add("@link", SqlDbType.Int).Value = rsslink;
+                    cmd.Parameters.Add("@link", SqlDbType.NVarChar).Value = rsslink;
                     con.Open();
                     cmd.ExecuteNonQuery();
 
